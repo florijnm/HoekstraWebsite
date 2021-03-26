@@ -1,0 +1,21 @@
+﻿@page
+@model Website_Hoekstra.Pages.AdminPageModel
+@{
+}
+
+<div>
+    <form method="post" asp-page-handler="AddPhoto"> 
+        <input type="file" name="path" value="@Model.NewPhoto.path" accept=".jpg, .png"/>
+        <input placeholder="Titel van de foto" value="@Model.NewPhoto.title" name="title"/>
+        <input placeholder="Een beschrijving van de foto" value="@Model.NewPhoto.description" name="description" />
+        <select name="category_id">
+            <option value="">Kies een categorie</option>
+            @foreach (var item in Model.category)
+            {
+                <option value="@item.category_id">@item.title</option>
+            }
+        </select>
+        <input type="text" placeholder="voer prijs in" value="@Model.NewPhoto.price" name="price"/>
+        <button type="submit">Upload foto</button>
+    </form>
+</div>

@@ -21,5 +21,22 @@ namespace Website_Hoekstra
             List<user_controller> users = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
             return users;
         }
+
+        public bool AddPhoto(ValuePhoto photo)
+        {
+            var connect = Connect();
+            int PhotoAdded = connect.Execute(
+                @"INSERT INTO pictures(title, description, price, path, category_id) VALUES (@title, @description, @price, @path, @category_id)"
+                , photo);
+
+            return PhotoAdded == 1;
+        }
+
+        public List<category_ids> GetCategorie()
+        {
+            var connect = Connect();
+            List<category_ids> categories = connect.Query<category_ids>(sql: "SELECT * FROM categories").ToList();
+            return categories;
+        }
     }
 }
