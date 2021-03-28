@@ -10,9 +10,11 @@ namespace Website_Hoekstra.Pages
 {
     public class LoginModel : PageModel
     {
-        [BindProperty] public ValuePhoto NewPhoto { get; set; } = new ValuePhoto();
-        [BindProperty] public user_controller NewUser { get; set; } = new user_controller();
-        
+        [BindProperty] public user_controller User { get; set; } = new user_controller();
+
+        [BindProperty] public login_user LoginUser { get; set; } = new login_user();
+        [BindProperty] public string Label { get; set; }
+
         public List<user_controller> Users
         {
             get
@@ -23,7 +25,8 @@ namespace Website_Hoekstra.Pages
 
         public void OnGet()
         {
-
+            Label = "false";
+            
         }
         
 
@@ -34,9 +37,9 @@ namespace Website_Hoekstra.Pages
 
         public void OnPostTryAddUser()
         {
-            if (checkUsernameAvailable())
+            if (CheckUsernameAvailable())
             {
-                new DBRepos().tryAddUser(NewUser);
+                new DBRepos().tryAddUser(User);
             }
             else
             {
@@ -44,19 +47,51 @@ namespace Website_Hoekstra.Pages
             }
         }
 
-        public bool checkUsernameAvailable()
+        public void OnPostVerifyUser()
+        {
+            if (VerifyPassword())
+            {
+                // login succesvol
+                Label = "true";
+            }
+            else
+            {
+                Label = "false";
+            }
+        }
+        
+        public bool CheckUsernameAvailable()
         {
 
             foreach (var user in Users)
             {
-                if (NewUser.username.Equals(user.username))
+                if (User.username.Equals(user.username))
                 {
-                    Console.WriteLine("gebruiker bestaat");
                     return false;
                 }
             }
-            Console.WriteLine("gebruiker bestaat NIET");
             return true;
+        }
+
+        public bool VerifyPassword()
+        {
+            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null )
+            {
+                foreach (var dbUser in Users)
+                {
+                    if (String.Compare(LoginUser.loginUsername,dbUser.username) == 0)
+                    {
+                        if (new DBRepos().verifyPass(LoginUser, dbUser.password))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+            return false;
         }
     }
 }
