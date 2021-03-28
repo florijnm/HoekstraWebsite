@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 namespace Website_Hoekstra
 {
@@ -12,18 +14,32 @@ namespace Website_Hoekstra
     {
         public IDbConnection Connect()
         {
-            string connectionString = @"Server=127.0.0.1;Port=3306;Database=hoekstrafotografie;Uid=root;Pwd='';";
+            string connectionString = @"Server=127.0.0.1;Port=3306;Database=hoekstrafotografie;Uid=root;Pwd='';AllowUserVariables=True;";
             return new MySqlConnection(connectionString);
         }
-        public List<user_controller> Get()
+        public List<user_controller> GetUsers()
         {
             var connect = Connect();
             List<user_controller> users = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
             return users;
         }
 
+        // public List<string> GetUsernames()
+        // {
+        //     var connect = Connect();
+        //     List<string> usernamess = connect.Query("SELECT username FROM users")
+        //
+        //     List<user_controller> usernamess = GetUsers();
+        //
+        //     
+        //     List<string> usernames = usernamess.
+        //     return usernames;
+        // }
+
         public bool AddPhoto(ValuePhoto photo)
         {
+            Console.WriteLine("test");
+            Console.WriteLine(photo);
             var connect = Connect();
             int PhotoAdded = connect.Execute(
                 @"INSERT INTO pictures(title, description, price, path, category_id) VALUES (@title, @description, @price, @path, @category_id)"
@@ -32,6 +48,36 @@ namespace Website_Hoekstra
             return PhotoAdded == 1;
         }
 
+        public bool tryAddUser(user_controller newUser)
+        {
+            Console.WriteLine("test");
+            Console.WriteLine(newUser);
+            string hashedPass = hashPass(newUser);
+            newUser.password = hashedPass;
+            Console.WriteLine("hashedpass: " + hashedPass);
+            var connect = Connect();
+            connect.Execute(@"INSERT INTO users (email, first_name, last_name, password, username, admin, user_id) VALUES (@email, @first_name, @last_name, @password, @username, @admin, @user_id)"
+            , newUser);
+            return true;
+        }
+
+        public string hashPass(user_controller newUser)
+        {
+            byte[] salt = new byte[128 / 8];
+            string password = newUser.password;
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
+            string hashedpass = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+            return hashedpass;
+        }
+        
         public List<category_ids> GetCategorie()
         {
             var connect = Connect();

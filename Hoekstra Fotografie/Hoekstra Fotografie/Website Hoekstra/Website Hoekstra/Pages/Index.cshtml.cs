@@ -20,7 +20,7 @@ namespace Website_Hoekstra.Pages
         {
             get
             {
-                return new DBRepos().Get();
+                return new DBRepos().GetUsers();
             }
         }
 
