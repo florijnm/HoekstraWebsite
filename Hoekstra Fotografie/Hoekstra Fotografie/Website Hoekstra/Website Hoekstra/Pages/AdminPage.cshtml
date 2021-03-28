@@ -4,9 +4,9 @@
 }
 
 <div>
-    <form method="post" asp-page-handler="AddPhoto"> 
-        <input type="file" name="path" value="@Model.NewPhoto.path" accept=".jpg, .png"/>
-        <input placeholder="Titel van de foto" value="@Model.NewPhoto.title" name="title"/>
+    <form method="post" asp-page-handler="AddPhoto">
+        <input type="file" name="path" value="@Model.NewPhoto.path" accept=".jpg, .png" />
+        <input placeholder="Titel van de foto" value="@Model.NewPhoto.title" name="title" />
         <input placeholder="Een beschrijving van de foto" value="@Model.NewPhoto.description" name="description" />
         <select name="category_id">
             <option value="">Kies een categorie</option>
@@ -15,7 +15,24 @@
                 <option value="@item.category_id">@item.title</option>
             }
         </select>
-        <input type="text" placeholder="voer prijs in" value="@Model.NewPhoto.price" name="price"/>
+        <input type="text" placeholder="voer prijs in" value="@Model.NewPhoto.price" name="price" />
         <button type="submit">Upload foto</button>
     </form>
+</div>
+
+<div>
+    @foreach (var item in Model.photo)
+    {
+        <form method="post" >
+            <div>
+                titel -- @item.title
+                beschrijving -- @item.description
+                path -- @item.path
+                prijs -- @item.price
+                <button type="submit" asp-page="UpdatePhoto" asp-route-picture_id="@item.picture_id">Verander informatie</button>
+                <button type="submit" asp-page-handler="ManageOrders" asp-route-picture_id ="@item.picture_id"> Verwijder foto</button>
+            </div>
+            <br />
+        </form>
+    }
 </div>

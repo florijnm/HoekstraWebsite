@@ -24,6 +24,14 @@ namespace Website_Hoekstra.Pages
             }
         }
 
+        public List<ValuePhoto> photo
+        {
+            get
+            {
+                return new DBRepos().GetPhotos();
+            }
+        }
+
         public void OnPost()
         {
 
@@ -34,9 +42,12 @@ namespace Website_Hoekstra.Pages
             if (ModelState.IsValid)
             {
                 new DBRepos().AddPhoto(NewPhoto);
-                ModelState.Clear();
             }
-            
+        }
+
+        public void OnPostManageOrders(int picture_id)
+        {
+            new DBRepos().DeletePhoto(picture_id);
         }
     }
 }

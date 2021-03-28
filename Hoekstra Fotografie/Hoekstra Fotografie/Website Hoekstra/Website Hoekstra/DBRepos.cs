@@ -38,5 +38,38 @@ namespace Website_Hoekstra
             List<category_ids> categories = connect.Query<category_ids>(sql: "SELECT * FROM categories").ToList();
             return categories;
         }
+
+        public List<ValuePhoto> GetPhotos()
+        {
+            var connect = Connect();
+            List<ValuePhoto> photos = connect.Query<ValuePhoto>(sql: "SELECT * FROM pictures").ToList();
+            return photos;
+        }
+
+        public ValuePhoto GetById(int Photo_id)
+        {
+            var connect = Connect();
+            var photo = connect.QuerySingleOrDefault<ValuePhoto>(sql: "SELECT * FROM pictures WHERE picture_id = @picture_id",
+                new { picture_id = Photo_id });
+            return photo;
+        }
+
+        public bool DeletePhoto(int Picture_Id)
+        {
+            var connect = Connect();
+            int DeletedPhotos = connect.Execute(sql: "DELETE FROM pictures WHERE picture_id = @picture_id",
+                new { picture_id = Picture_Id });
+            return DeletedPhotos == 1;
+        }
+
+        public ValuePhoto Update(ValuePhoto photo)
+        {
+            var connect = Connect();
+            ValuePhoto UpdatedPhoto = connect.QuerySingle<ValuePhoto>(sql: @"UPDATE pictures SET title = @title, description = @description, 
+                                                                            price = @price, path = @path, category_id = @category_id
+                                                                            WHERE picture_id = @picture_id;
+                                                                            SELECT * FROM pictures WHERE picture_id = @picture_id", photo);
+            return UpdatedPhoto;
+        }
     }
 }
