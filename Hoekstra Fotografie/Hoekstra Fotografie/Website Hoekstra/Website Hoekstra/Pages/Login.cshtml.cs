@@ -59,7 +59,6 @@ namespace Website_Hoekstra.Pages
                 Label = "false";
             }
         }
-        
         public bool CheckUsernameAvailable()
         {
 
