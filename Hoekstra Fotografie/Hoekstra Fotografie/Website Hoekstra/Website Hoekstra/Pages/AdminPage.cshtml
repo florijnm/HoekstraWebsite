@@ -2,7 +2,7 @@
 @model Website_Hoekstra.Pages.AdminPageModel
 @{
 }
-
+@Model.Label
 <div>
     <form method="post" asp-page-handler="AddPhoto"> 
         <input type="file" name="path" value="@Model.NewPhoto.path" accept=".jpg, .png"/>
