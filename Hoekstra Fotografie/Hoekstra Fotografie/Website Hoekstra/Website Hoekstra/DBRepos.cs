@@ -14,7 +14,7 @@ namespace Website_Hoekstra
     {
         public IDbConnection Connect()
         {
-            string connectionString = @"Server=127.0.0.1;Port=3306;Database=hoekstrafotografie;Uid=root;Pwd='';AllowUserVariables=True;";
+            string connectionString = @"Server=127.0.0.1;Port=3306;Database=hoekstrafotografie;Uid=root;Pwd=''";
             return new MySqlConnection(connectionString);
         }
         public List<user_controller> GetUsers()
@@ -24,22 +24,8 @@ namespace Website_Hoekstra
             return users;
         }
 
-        // public List<string> GetUsernames()
-        // {
-        //     var connect = Connect();
-        //     List<string> usernamess = connect.Query("SELECT username FROM users")
-        //
-        //     List<user_controller> usernamess = GetUsers();
-        //
-        //     
-        //     List<string> usernames = usernamess.
-        //     return usernames;
-        // }
-
         public bool AddPhoto(ValuePhoto photo)
         {
-            Console.WriteLine("test");
-            Console.WriteLine(photo);
             var connect = Connect();
             int PhotoAdded = connect.Execute(
                 @"INSERT INTO pictures(title, description, price, path, category_id) VALUES (@title, @description, @price, @path, @category_id)"
@@ -50,32 +36,58 @@ namespace Website_Hoekstra
 
         public bool tryAddUser(user_controller newUser)
         {
-            Console.WriteLine("test");
-            Console.WriteLine(newUser);
-            string hashedPass = hashPass(newUser);
+            string hashedPass = hashPass(newUser.password);
             newUser.password = hashedPass;
-            Console.WriteLine("hashedpass: " + hashedPass);
             var connect = Connect();
             connect.Execute(@"INSERT INTO users (email, first_name, last_name, password, username, admin, user_id) VALUES (@email, @first_name, @last_name, @password, @username, @admin, @user_id)"
             , newUser);
             return true;
         }
 
-        public string hashPass(user_controller newUser)
+        public string hashPass(string password, byte[] salt = null, bool needsOnlyHash = false)
         {
-            byte[] salt = new byte[128 / 8];
-            string password = newUser.password;
-            using (var rng = RandomNumberGenerator.Create())
+            if (salt == null || salt.Length != 16)
             {
-                rng.GetBytes(salt);
+                salt = new byte[128 / 8];
+                using (var rng = RandomNumberGenerator.Create())
+                {
+                    rng.GetBytes(salt);
+                }
             }
+
             string hashedpass = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: password,
                 salt: salt,
                 prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
                 numBytesRequested: 256 / 8));
-            return hashedpass;
+
+            if (needsOnlyHash) return hashedpass;
+            return $"{hashedpass}:{Convert.ToBase64String(salt)}";;
+        }
+
+        public bool verifyPass(login_user userToCheck, string hashedPassWithSalt)
+        {
+            var passwordAndHash = hashedPassWithSalt.Split(':');
+            if (passwordAndHash == null || passwordAndHash.Length != 2)
+            {
+                return false;
+                
+            }
+            var salt = Convert.FromBase64String(passwordAndHash[1]);
+            if (salt == null)
+            {
+                return false;
+                
+            }
+
+            var hashOfPasswordToCheck = hashPass(userToCheck.loginPassword, salt, true);
+            if (String.Compare(passwordAndHash[0],hashOfPasswordToCheck) == 0)
+            {
+                return true;
+            }
+            return false;
+            
         }
         
         public List<category_ids> GetCategorie()

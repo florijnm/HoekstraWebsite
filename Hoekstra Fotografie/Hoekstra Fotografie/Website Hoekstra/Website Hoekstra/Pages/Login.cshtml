@@ -3,13 +3,29 @@
 
 <div>
     <form method="post" asp-page-handler="tryAddUser">
-        <input type="text" placeholder="Username" value="@Model.NewUser.username" name="username"/><br>
-        <input type="email" placeholder="Email" value="@Model.NewUser.email" name="email"/><br>
-        <input type="text" placeholder="First Name" value="@Model.NewUser.first_name" name="first_name">
-        <input type="text" placeholder="Last Name" value="@Model.NewUser.last_name" name="last_name"><br>
-        <input type="password" placeholder="Password" value="@Model.NewUser.password" name="password">
+        <input type="text" placeholder="Username" value="@Model.User.username" name="username"/><br>
+        <input type="email" placeholder="Email" value="@Model.User.email" name="email"/><br>
+        <input type="text" placeholder="First Name" value="@Model.User.first_name" name="first_name">
+        <input type="text" placeholder="Last Name" value="@Model.User.last_name" name="last_name"><br>
+        <input type="password" placeholder="Password" value="@Model.User.password" name="password">
         
         <button type="submit">Register</button>
         
     </form>
+    
+    
 </div>
+<br>
+<br>
+<br>
+<br>
+<div>
+    <form method="post" asp-page-handler="verifyUser">
+        <input type="text" placeholder="Username" value="@Model.LoginUser.loginUsername" name="loginUsername"/><br>
+        <input type="password" placeholder="Password" value="@Model.LoginUser.loginPassword" name="loginPassword">
+        <button type="submit">Login</button>
+    </form>
+</div>
+<p>
+    <input type="submit" value="@Model.Label" class="btn btn-primary"/>
+</p>
