@@ -1,20 +1,41 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Website_Hoekstra.Pages
+namespace Website_Hoekstra.Pages.ViewComponents
 {
-    public class LoginModel : PageModel
-    {
+    public class HeaderViewComponent : ViewComponent
+       {
         [BindProperty] public user_controller User { get; set; } = new user_controller();
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
         [BindProperty] public string Label { get; set; }
-        
 
+        public string test = "";
+
+
+        public HeaderViewComponent(string tester, string jonge = "dipshit")
+        {
+            test = tester;
+        }
+        
+        public string InvokeAsync()
+        {
+            test += test;
+            return test;
+        }
+        
+        
+        //
+        // public async Task<IViewComponentResult> rInvokeAsync()
+        // {
+        //     var user = await User;
+        //     return View(user);
+        // }
+        
         public List<user_controller> Users
         {
             get
