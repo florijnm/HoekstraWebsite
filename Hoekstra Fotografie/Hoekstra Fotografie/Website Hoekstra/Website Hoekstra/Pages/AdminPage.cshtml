@@ -27,7 +27,6 @@
             <div>
                 titel -- @item.title
                 beschrijving -- @item.description
-                path -- @item.path
                 prijs -- @item.price
                 <button type="submit" asp-page="UpdatePhoto" asp-route-picture_id="@item.picture_id">Verander informatie</button>
                 <button type="submit" asp-page-handler="ManageOrders" asp-route-picture_id ="@item.picture_id"> Verwijder foto</button>

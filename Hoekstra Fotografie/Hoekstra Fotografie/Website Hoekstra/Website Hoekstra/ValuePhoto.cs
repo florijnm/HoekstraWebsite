@@ -10,10 +10,10 @@ namespace Website_Hoekstra
     {
         [Required]
         public string title { get; set; }
-        
+
         [Required]
         public string description { get; set; }
-        
+
         [Required]
         public string path { get; set; }
         
