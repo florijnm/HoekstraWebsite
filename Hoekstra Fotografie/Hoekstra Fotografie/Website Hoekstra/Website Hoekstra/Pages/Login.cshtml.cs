@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -26,13 +26,13 @@ namespace Website_Hoekstra.Pages
         public void OnGet()
         {
             Label = "false";
-            
+
         }
-        
+
 
         public void OnPost()
         {
-            
+
         }
 
         public void OnPostTryAddUser()
@@ -43,7 +43,7 @@ namespace Website_Hoekstra.Pages
             }
             else
             {
-                
+
             }
         }
 
@@ -83,11 +83,11 @@ namespace Website_Hoekstra.Pages
 
         public bool VerifyPassword()
         {
-            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null )
+            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null)
             {
                 foreach (var dbUser in Users)
                 {
-                    if (String.Compare(LoginUser.loginUsername,dbUser.username) == 0)
+                    if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
                     {
                         if (new DBRepos().verifyPass(LoginUser, dbUser.password))
                         {

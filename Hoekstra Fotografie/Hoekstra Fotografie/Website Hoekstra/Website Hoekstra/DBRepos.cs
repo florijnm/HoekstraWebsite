@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Website_Hoekstra.Pages;
 
 namespace Website_Hoekstra
 {
@@ -12,10 +15,10 @@ namespace Website_Hoekstra
     {
         public IDbConnection Connect()
         {
-            string connectionString = @"Server=127.0.0.1;Port=3306;Database=hoekstrafotografie;Uid=root;Pwd='';";
+            string connectionString = @"Server=127.0.0.1;Port=3306;Database=hoekstrafotografie;Uid=root;Pwd=''";
             return new MySqlConnection(connectionString);
         }
-        public List<user_controller> Get()
+        public List<user_controller> GetUsers()
         {
             var connect = Connect();
             List<user_controller> users = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
@@ -30,6 +33,62 @@ namespace Website_Hoekstra
                 , photo);
 
             return PhotoAdded == 1;
+        }
+
+        public bool tryAddUser(user_controller newUser)
+        {
+            string hashedPass = hashPass(newUser.password);
+            newUser.password = hashedPass;
+            var connect = Connect();
+            connect.Execute(@"INSERT INTO users (email, first_name, last_name, password, username, admin, user_id) VALUES (@email, @first_name, @last_name, @password, @username, @admin, @user_id)"
+            , newUser);
+            return true;
+        }
+
+        public string hashPass(string password, byte[] salt = null, bool needsOnlyHash = false)
+        {
+            if (salt == null || salt.Length != 16)
+            {
+                salt = new byte[128 / 8];
+                using (var rng = RandomNumberGenerator.Create())
+                {
+                    rng.GetBytes(salt);
+                }
+            }
+
+            string hashedpass = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+
+            if (needsOnlyHash) return hashedpass;
+            return $"{hashedpass}:{Convert.ToBase64String(salt)}"; ;
+        }
+
+        public bool verifyPass(login_user userToCheck, string hashedPassWithSalt)
+        {
+            var passwordAndHash = hashedPassWithSalt.Split(':');
+            if (passwordAndHash == null || passwordAndHash.Length != 2)
+            {
+                return false;
+
+            }
+            var salt = Convert.FromBase64String(passwordAndHash[1]);
+            if (salt == null)
+            {
+                return false;
+
+            }
+
+            var hashOfPasswordToCheck = hashPass(userToCheck.loginPassword, salt, true);
+            if (String.Compare(passwordAndHash[0], hashOfPasswordToCheck) == 0)
+            {
+                return true;
+            }
+            return false;
+
         }
 
         public List<category_ids> GetCategorie()

@@ -7,12 +7,12 @@ namespace Website_Hoekstra
 {
     public class user_controller
     {
-        public string first_name;
-        public string last_name;
-        public string email;
-        public string password;
-        public string username;
-        public int user_id;
-        public bool admin;
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string username { get; set; }
+        public int user_id { get; set; }
+        public bool admin { get; set; }
     }
 }
