@@ -53,6 +53,18 @@ namespace Website_Hoekstra.Pages
             {
                 // login succesvol
                 Label = "true";
+<<<<<<< HEAD
+=======
+                Response.Cookies.Append("cookieLogin", LoginUser.loginUsername);
+                if (User.admin == true)
+                {
+                    Response.Redirect("adminpage");
+                }
+                else
+                {
+                    Response.Redirect("Error");
+                }
+>>>>>>> flori
             }
             else
             {
@@ -82,6 +94,12 @@ namespace Website_Hoekstra.Pages
                     {
                         if (new DBRepos().verifyPass(LoginUser, dbUser.password))
                         {
+<<<<<<< HEAD
+=======
+                            User.admin = dbUser.admin;
+                            User.username = dbUser.username;
+                            User.password = dbUser.password;
+>>>>>>> flori
                             return true;
                         }
                         return false;
