@@ -124,7 +124,7 @@ namespace Website_Hoekstra
         {
             var connect = Connect();
             ValuePhoto UpdatedPhoto = connect.QuerySingle<ValuePhoto>(sql: @"UPDATE pictures SET title = @title, description = @description, 
-                                                                            price = @price, path = @path, category_id = @category_id
+                                                                            price = @price, path = @path.FileName, category_id = @category_id
                                                                             WHERE picture_id = @picture_id;
                                                                             SELECT * FROM pictures WHERE picture_id = @picture_id", photo);
             return UpdatedPhoto;

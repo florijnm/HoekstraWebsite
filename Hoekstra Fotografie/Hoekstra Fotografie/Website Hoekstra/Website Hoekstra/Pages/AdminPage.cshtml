@@ -5,7 +5,7 @@
 
 <div>
     <form method="post" asp-page-handler="AddPhoto">
-        <input type="file" name="path" value="@Model.NewPhoto.path" accept=".jpg, .png" />
+        <input type="file" value="path" name="path" accept="image/*"/>
         <input placeholder="Titel van de foto" value="@Model.NewPhoto.title" name="title" />
         <input placeholder="Een beschrijving van de foto" value="@Model.NewPhoto.description" name="description" />
         <select name="category_id">
@@ -20,6 +20,7 @@
     </form>
 </div>
 
+
 <div>
     @foreach (var item in Model.photo)
     {
@@ -28,6 +29,7 @@
                 titel -- @item.title
                 beschrijving -- @item.description
                 prijs -- @item.price
+                <img style="max-width: 100px; max-height: 100px;" src="~/Images/@item.path"/>
                 <button type="submit" asp-page="UpdatePhoto" asp-route-picture_id="@item.picture_id">Verander informatie</button>
                 <button type="submit" asp-page-handler="ManageOrders" asp-route-picture_id ="@item.picture_id"> Verwijder foto</button>
             </div>
