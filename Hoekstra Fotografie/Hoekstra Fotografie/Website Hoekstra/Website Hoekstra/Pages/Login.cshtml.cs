@@ -5,6 +5,8 @@ using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections;
+using Microsoft.AspNetCore.Http;
 
 namespace Website_Hoekstra.Pages
 {
@@ -14,6 +16,7 @@ namespace Website_Hoekstra.Pages
 
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
         [BindProperty] public string Label { get; set; }
+
 
         public List<user_controller> Users
         {
@@ -51,9 +54,10 @@ namespace Website_Hoekstra.Pages
         {
             if (VerifyPassword())
             {
+
                 // login succesvol
                 Label = "true";
-                Response.Cookies.Append("cookieLogin", LoginUser.loginUsername);
+                HttpContext.Session.SetString("LoginSession", LoginUser.loginUsername.ToString());
                 if (User.admin == true)
                 {
                     Response.Redirect("adminpage");

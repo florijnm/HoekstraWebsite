@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Http;
 
 namespace Website_Hoekstra.Pages
 {
@@ -13,10 +14,11 @@ namespace Website_Hoekstra.Pages
         [BindProperty] public string Label { get; set; }
         public void OnGet()
         {
-            string cookieStr = Request.Cookies["cookieLogin"];
-            if (cookieStr != null)
+            //string cookieStr = Request.Cookies["cookieLogin"];
+            string SessionCookie = HttpContext.Session.GetString("LoginSession");
+            if (SessionCookie != null)
             {
-                Label = "Welcome, " + FirstLetterToUpper(cookieStr.ToString()) + "!";
+                Label = "Welcome, " + FirstLetterToUpper(SessionCookie.ToString()) + "!";
             }
         }
 
