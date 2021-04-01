@@ -1,6 +1,7 @@
 ﻿@page
 @model Website_Hoekstra.Pages.LoginModel
 
+<<<<<<< HEAD
 <div>
     <form method="post" asp-page-handler="tryAddUser">
         <input type="text" placeholder="Username" value="@Model.User.username" name="username"/><br>
@@ -14,6 +15,22 @@
     </form>
     
     
+=======
+s
+<div>
+    <form method="post" asp-page-handler="tryAddUser">
+        <input type="text" placeholder="Username" value="@Model.User.username" name="username" /><br>
+        <input type="email" placeholder="Email" value="@Model.User.email" name="email" /><br>
+        <input type="text" placeholder="First Name" value="@Model.User.first_name" name="first_name">
+        <input type="text" placeholder="Last Name" value="@Model.User.last_name" name="last_name"><br>
+        <input type="password" placeholder="Password" value="@Model.User.password" name="password">
+
+        <button type="submit">Register</button>
+
+    </form>
+
+
+>>>>>>> flori
 </div>
 <br>
 <br>
@@ -21,11 +38,19 @@
 <br>
 <div>
     <form method="post" asp-page-handler="verifyUser">
+<<<<<<< HEAD
         <input type="text" placeholder="Username" value="@Model.LoginUser.loginUsername" name="loginUsername"/><br>
+=======
+        <input type="text" placeholder="Username" value="@Model.LoginUser.loginUsername" name="loginUsername" /><br>
+>>>>>>> flori
         <input type="password" placeholder="Password" value="@Model.LoginUser.loginPassword" name="loginPassword">
         <button type="submit">Login</button>
     </form>
 </div>
 <p>
+<<<<<<< HEAD
     <input type="submit" value="@Model.Label" class="btn btn-primary"/>
+=======
+    <input type="submit" value="@Model.Label" class="btn btn-primary" />
+>>>>>>> flori
 </p>

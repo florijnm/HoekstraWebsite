@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections;
+using Microsoft.AspNetCore.Http;
 
 namespace Website_Hoekstra.Pages
 {
@@ -14,6 +16,7 @@ namespace Website_Hoekstra.Pages
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
         [BindProperty] public string Label { get; set; }
         
+
 
         public List<user_controller> Users
         {
@@ -26,13 +29,13 @@ namespace Website_Hoekstra.Pages
         public void OnGet()
         {
             Label = "false";
-            
+
         }
-        
+
 
         public void OnPost()
         {
-            
+
         }
 
         public void OnPostTryAddUser()
@@ -43,7 +46,7 @@ namespace Website_Hoekstra.Pages
             }
             else
             {
-                
+
             }
         }
 
@@ -51,9 +54,10 @@ namespace Website_Hoekstra.Pages
         {
             if (VerifyPassword())
             {
+
                 // login succesvol
                 Label = "true";
-                Response.Cookies.Append("cookieLogin", LoginUser.loginUsername);
+                HttpContext.Session.SetString("LoginSession", LoginUser.loginUsername.ToString());
                 if (User.admin == true)
                 {
                     Response.Redirect("adminpage");
@@ -83,11 +87,11 @@ namespace Website_Hoekstra.Pages
 
         public bool VerifyPassword()
         {
-            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null )
+            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null)
             {
                 foreach (var dbUser in Users)
                 {
-                    if (String.Compare(LoginUser.loginUsername,dbUser.username) == 0)
+                    if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
                     {
                         if (new DBRepos().verifyPass(LoginUser, dbUser.password))
                         {

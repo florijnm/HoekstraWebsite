@@ -7,6 +7,10 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+<<<<<<< HEAD
+=======
+using Website_Hoekstra.Pages;
+>>>>>>> flori
 
 namespace Website_Hoekstra
 {
@@ -63,7 +67,11 @@ namespace Website_Hoekstra
                 numBytesRequested: 256 / 8));
 
             if (needsOnlyHash) return hashedpass;
+<<<<<<< HEAD
             return $"{hashedpass}:{Convert.ToBase64String(salt)}";;
+=======
+            return $"{hashedpass}:{Convert.ToBase64String(salt)}"; ;
+>>>>>>> flori
         }
 
         public bool verifyPass(login_user userToCheck, string hashedPassWithSalt)
@@ -72,24 +80,42 @@ namespace Website_Hoekstra
             if (passwordAndHash == null || passwordAndHash.Length != 2)
             {
                 return false;
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> flori
             }
             var salt = Convert.FromBase64String(passwordAndHash[1]);
             if (salt == null)
             {
                 return false;
+<<<<<<< HEAD
                 
             }
 
             var hashOfPasswordToCheck = hashPass(userToCheck.loginPassword, salt, true);
             if (String.Compare(passwordAndHash[0],hashOfPasswordToCheck) == 0)
+=======
+
+            }
+
+            var hashOfPasswordToCheck = hashPass(userToCheck.loginPassword, salt, true);
+            if (String.Compare(passwordAndHash[0], hashOfPasswordToCheck) == 0)
+>>>>>>> flori
             {
                 return true;
             }
             return false;
+<<<<<<< HEAD
             
         }
         
+=======
+
+        }
+
+>>>>>>> flori
         public List<category_ids> GetCategorie()
         {
             var connect = Connect();

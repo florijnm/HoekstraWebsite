@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,7 +27,11 @@ namespace Website_Hoekstra.Pages
 
         public void OnGet()
         {
-
+            string SessionCookie = HttpContext.Session.GetString("LoginSession");
+            if (SessionCookie != null)
+            {
+                Response.Redirect("adminpage");
+            }
         }
     }
 }
