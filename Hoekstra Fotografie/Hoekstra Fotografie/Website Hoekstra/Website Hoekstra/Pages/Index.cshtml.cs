@@ -24,13 +24,22 @@ namespace Website_Hoekstra.Pages
                 return new DBRepos().GetUsers();
             }
         }
-
+        
         public void OnGet()
         {
+            DBRepos repos = new DBRepos();
             string SessionCookie = HttpContext.Session.GetString("LoginSession");
             if (SessionCookie != null)
             {
-                Response.Redirect("adminpage");
+                user_controller user = repos.GetUserByID(Convert.ToInt32(SessionCookie));
+                if (user.admin)
+                {
+                    Response.Redirect("adminpage");
+                }
+                else
+                {
+                    Response.Redirect("Error");
+                }
             }
         }
     }

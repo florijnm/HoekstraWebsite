@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Website_Hoekstra.Pages;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Website_Hoekstra
 {
@@ -96,6 +97,39 @@ namespace Website_Hoekstra
             var connect = Connect();
             List<category_ids> categories = connect.Query<category_ids>(sql: "SELECT * FROM categories").ToList();
             return categories;
+        }
+       public user_controller UserByID = new user_controller();
+
+
+        public user_controller GetUserByUserID(string username)
+        {
+            var connect = Connect();
+            List<user_controller> usercheckers = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
+            foreach (var user in usercheckers)
+            {
+                if (user.username == username)
+                {
+                    UserByID = user;
+                    return UserByID;
+                }
+            }
+            return null;
+        }
+
+        public user_controller UserByTheirID = new user_controller();
+        public user_controller GetUserByID(int user_id)
+        {
+            var connect = Connect();
+            List<user_controller> getuser = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
+            foreach (var user in getuser)
+            {
+                if (user.user_id == user_id)
+                {
+                    UserByTheirID = user;
+                    return UserByTheirID;
+                }
+            }
+            return null;
         }
     }
 }

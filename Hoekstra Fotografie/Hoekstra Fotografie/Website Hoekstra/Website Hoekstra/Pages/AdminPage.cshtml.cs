@@ -16,9 +16,11 @@ namespace Website_Hoekstra.Pages
         {
             //string cookieStr = Request.Cookies["cookieLogin"];
             string SessionCookie = HttpContext.Session.GetString("LoginSession");
+            DBRepos repos = new DBRepos();
+            user_controller user = repos.GetUserByID(Convert.ToInt32(SessionCookie));
             if (SessionCookie != null)
             {
-                Label = "Welcome, " + FirstLetterToUpper(SessionCookie.ToString()) + "!";
+                Label = "Welcome, " + FirstLetterToUpper(user.username.ToString()) + "!";
             }
         }
 

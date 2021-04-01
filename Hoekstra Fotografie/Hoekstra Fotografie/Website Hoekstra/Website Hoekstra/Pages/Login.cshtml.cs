@@ -54,11 +54,12 @@ namespace Website_Hoekstra.Pages
         {
             if (VerifyPassword())
             {
-
+                DBRepos repos = new DBRepos();
+                user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
                 // login succesvol
                 Label = "true";
-                HttpContext.Session.SetString("LoginSession", LoginUser.loginUsername.ToString());
-                if (User.admin == true)
+                HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
+                if (user.admin == true)
                 {
                     Response.Redirect("adminpage");
                 }
