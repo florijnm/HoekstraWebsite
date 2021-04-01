@@ -11,7 +11,7 @@
 <body>
 
 @Html.Partial("Header", new Header())
-
+    @await Component.InvokeAsync("Header")
 
 
 <div class="container">

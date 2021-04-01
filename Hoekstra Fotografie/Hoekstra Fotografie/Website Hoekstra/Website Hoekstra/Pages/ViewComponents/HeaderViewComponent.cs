@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Website_Hoekstra.Pages.Components.Header;
+
 
 namespace Website_Hoekstra.Pages.ViewComponents
 {

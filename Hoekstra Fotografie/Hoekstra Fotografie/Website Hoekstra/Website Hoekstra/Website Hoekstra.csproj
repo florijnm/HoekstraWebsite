@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Components" />
     <Folder Include="Pages\Repositories" />
   </ItemGroup>
 
