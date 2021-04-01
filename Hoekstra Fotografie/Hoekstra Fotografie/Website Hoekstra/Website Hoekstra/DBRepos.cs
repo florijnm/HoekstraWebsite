@@ -129,5 +129,12 @@ namespace Website_Hoekstra
                                                                             SELECT * FROM pictures WHERE picture_id = @picture_id", photo);
             return UpdatedPhoto;
         }
+
+        public int PhotoOrder(PhotosOrdered photo)
+        {
+            var connect = Connect();
+            int PhotoAdded = connect.Execute("INSERT INTO pictures_orders(order_id, picture_id) VALUES(1, @picture_id)", photo);
+            return PhotoAdded;
+        }
     }
 }

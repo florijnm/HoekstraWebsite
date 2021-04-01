@@ -12,13 +12,7 @@ namespace Website_Hoekstra.Pages
     public class AdminPageModel : PageModel
     {
         [BindProperty] public ValuePhoto NewPhoto { get; set; } = new ValuePhoto();
-<<<<<<< HEAD
-
-        
-
-=======
         [BindProperty] public string Label { get; set; }
->>>>>>> flori
         public void OnGet()
         {
             string cookieStr = Request.Cookies["cookieLogin"];
