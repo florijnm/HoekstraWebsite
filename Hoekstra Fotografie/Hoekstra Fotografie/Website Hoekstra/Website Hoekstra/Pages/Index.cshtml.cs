@@ -11,10 +11,19 @@ namespace Website_Hoekstra.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        
+        //pls kill
+        private readonly user_controller User;
+        private readonly login_user LoginUser;
+        private readonly string Label;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
+            
+            User = new user_controller();
+            LoginUser = new login_user();
+            Label = "tyfus";
         }
         public List<user_controller> Users
         {
@@ -26,7 +35,7 @@ namespace Website_Hoekstra.Pages
 
         public void OnGet()
         {
-
+            
         }
     }
 }

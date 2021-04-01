@@ -2,33 +2,59 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Policy;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Website_Hoekstra.Pages.Components.Header;
 
 namespace Website_Hoekstra.Pages.ViewComponents
 {
+    public class testString
+    {
+        public string testStringName { get; set; }
+    }
+    
+    
     public class HeaderViewComponent : ViewComponent
-       {
-        [BindProperty] public user_controller User { get; set; } = new user_controller();
-        [BindProperty] public login_user LoginUser { get; set; } = new login_user();
-        [BindProperty] public string Label { get; set; }
+    {
+        private user_controller User;
+        private login_user LoginUser;
+        private string Label;
 
-        public string test = "";
+        private string test;
 
 
-        public HeaderViewComponent(string tester, string jonge = "dipshit")
+        public HeaderViewComponent()
         {
-            test = tester;
+            User = new user_controller();
+            LoginUser = new login_user();
+            Label = "tyfuas";
+            test = "tyfus";
         }
-        
-        public string InvokeAsync()
+
+        public IViewComponentResult Invoke(string testString = "null")
         {
-            test += test;
-            return test;
+            List<testString> testStrings = new List<testString>();
+
+            for (int i = 0; i < 10; i++)
+            {
+                testStrings.Add(new testString()
+                    {
+                        testStringName = "dude nummer : " + i.ToString()
+                    }
+                );
+            }
+
+            return View(testStrings);
         }
-        
-        
+
+        // public async Task<IViewComponentResult> InvokeAsync()
+        // {
+        //     return View("SignedOut");
+        // }
+
+
         //
         // public async Task<IViewComponentResult> rInvokeAsync()
         // {

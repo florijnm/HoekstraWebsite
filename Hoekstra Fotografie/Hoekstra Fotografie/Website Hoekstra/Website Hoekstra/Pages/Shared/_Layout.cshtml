@@ -8,10 +8,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>?//<!__-- -->?</!__-->
-    @{Html.RenderPartial("Header");}
+<body>
 
-    <div class="container">
+@Html.Partial("Header", new Header())
+@await Component.InvokeAsync("Header")
+
+
+<div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
