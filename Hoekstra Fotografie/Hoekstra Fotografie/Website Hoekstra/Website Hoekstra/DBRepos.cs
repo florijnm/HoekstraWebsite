@@ -7,10 +7,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-<<<<<<< HEAD
-=======
 using Website_Hoekstra.Pages;
->>>>>>> flori
 
 namespace Website_Hoekstra
 {
@@ -67,55 +64,38 @@ namespace Website_Hoekstra
                 numBytesRequested: 256 / 8));
 
             if (needsOnlyHash) return hashedpass;
-<<<<<<< HEAD
             return $"{hashedpass}:{Convert.ToBase64String(salt)}";;
-=======
-            return $"{hashedpass}:{Convert.ToBase64String(salt)}"; ;
->>>>>>> flori
         }
 
-        public bool verifyPass(login_user userToCheck, string hashedPassWithSalt)
+        public bool verifyPass(LoginUser userToCheck, string hashedPassWithSalt)
         {
             var passwordAndHash = hashedPassWithSalt.Split(':');
             if (passwordAndHash == null || passwordAndHash.Length != 2)
             {
                 return false;
-<<<<<<< HEAD
-                
-=======
-
->>>>>>> flori
             }
             var salt = Convert.FromBase64String(passwordAndHash[1]);
             if (salt == null)
             {
                 return false;
-<<<<<<< HEAD
                 
             }
 
-            var hashOfPasswordToCheck = hashPass(userToCheck.loginPassword, salt, true);
-            if (String.Compare(passwordAndHash[0],hashOfPasswordToCheck) == 0)
-=======
-
-            }
 
             var hashOfPasswordToCheck = hashPass(userToCheck.loginPassword, salt, true);
             if (String.Compare(passwordAndHash[0], hashOfPasswordToCheck) == 0)
->>>>>>> flori
             {
                 return true;
             }
             return false;
-<<<<<<< HEAD
             
         }
-        
-=======
 
+        internal bool verifyPass(login_user loginUser, string password)
+        {
+            throw new NotImplementedException();
         }
 
->>>>>>> flori
         public List<category_ids> GetCategorie()
         {
             var connect = Connect();
@@ -159,8 +139,29 @@ namespace Website_Hoekstra
         public int PhotoOrder(PhotosOrdered photo)
         {
             var connect = Connect();
-            int PhotoAdded = connect.Execute("INSERT INTO pictures_orders(order_id, picture_id) VALUES(1, @picture_id)", photo);
+            int PhotoAdded = connect.Execute("INSERT INTO pictures_orders(order_id, picture_id) VALUES(@order_id ,@picture_id)", photo);
             return PhotoAdded;
+        }
+
+        public int NewOrder(user_controller user, PhotosOrdered PhotoId)
+        {
+            var connect = Connect();
+            int NewOrder = connect.Execute("INSERT INTO orders(user_id) VALUES(@user_id)", user);
+            return NewOrder;
+        }
+
+        public int PricePhoto(PhotosOrdered photo)
+        {
+            var connect = Connect();
+            int price = connect.QuerySingleOrDefault<int>(sql: "SELECT price FROM pictures WHERE picture_id = @picture_id", photo);
+            return price;
+        }
+
+        public int PriceTotal(PhotosOrdered photos)
+        {
+            var connect = Connect();
+            int price = connect.QuerySingleOrDefault<int>("SELECT * FROM pictures p INNER JOIN pictures_orders po ON p.picture_id = po.picture_id WHERE po.order_id = @order_id", photos);
+            return price;
         }
     }
 }

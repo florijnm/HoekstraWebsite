@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
 
 namespace Website_Hoekstra.Pages
 {
@@ -14,6 +14,7 @@ namespace Website_Hoekstra.Pages
     {
         [BindProperty] public ValuePhoto NewPhoto { get; set; } = new ValuePhoto();
         [BindProperty] public string Label { get; set; }
+        
         public void OnGet()
         {
             //string cookieStr = Request.Cookies["cookieLogin"];
@@ -55,16 +56,16 @@ namespace Website_Hoekstra.Pages
 
         public void OnPost()
         {
-
         }
+
+
 
         public void OnPostAddPhoto()
         {
-            
             if (ModelState.IsValid)
             {
                 new DBRepos().AddPhoto(NewPhoto);
-                //IFormFile file = Request.Form.Files["path"];
+                
                 //using (FileStream fs = new FileStream("wwwroot/Images", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
                 //{
                 //    file.CopyTo(fs);

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Website_Hoekstra
 {
-    public class login_user
+    public class LoginUser
     {
         public string loginEmail { get; set; }
         public string loginPassword { get; set; }

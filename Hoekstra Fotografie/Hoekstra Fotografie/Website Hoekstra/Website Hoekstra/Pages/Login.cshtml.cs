@@ -93,7 +93,7 @@ namespace Website_Hoekstra.Pages
                 {
                     if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
                     {
-                        if (new DBRepos().verifyPass(LoginUser, dbUser.password))
+                        if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
                         {
                             User.admin = dbUser.admin;
                             User.username = dbUser.username;

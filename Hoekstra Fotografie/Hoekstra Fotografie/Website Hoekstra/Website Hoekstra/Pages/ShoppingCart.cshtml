@@ -1,0 +1,24 @@
+﻿@page
+@model Website_Hoekstra.Pages.ShoppingCartModel
+@{
+}
+
+<table>
+    @if (Model.PhotosOrder != null)
+    {
+        @foreach (var Photo in Model.PhotosOrder)
+        {
+            <tr>
+                <td>@Photo.order_id</td>
+                <td>@Photo.picture_id</td>
+                <td>Prijs : @Model.GetPrice()</td>
+            </tr>
+        }
+    }
+</table>
+
+<div>
+    <p>
+        Totaal prijs :
+    </p>
+</div>
