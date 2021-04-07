@@ -24,6 +24,14 @@ namespace Website_Hoekstra.Pages
             }
         }
 
+        public List<Order> Orders
+        {
+            get
+            {
+                return new Order().GetOrders();
+            }
+        }
+
         public string FirstLetterToUpper(string str)
         {
             if (str == null)
