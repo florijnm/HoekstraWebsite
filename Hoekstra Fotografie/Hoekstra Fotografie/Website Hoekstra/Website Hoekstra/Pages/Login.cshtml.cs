@@ -16,8 +16,6 @@ namespace Website_Hoekstra.Pages
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
         [BindProperty] public string Label { get; set; }
         
-
-
         public List<user_controller> Users
         {
             get

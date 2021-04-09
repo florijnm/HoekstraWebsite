@@ -1,18 +1,17 @@
-﻿@{
-    Layout = null;
-}
 
-
-@* NIET MEER NODIG DEZE MAAR IK LAAT HEM STAAN VOOR DE CTRL + C *@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <title></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Website_Hoekstra</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
+
 <header>
-        
+
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand -->
         <a class="navbar-brand" href="index">Hoekstra Fotografie</a>
@@ -22,13 +21,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="adminpage">Admin Page</a>
             </li>
-        
+
             <li class="nav-item">
                 <a class="nav-link" href="login">Register test Page</a>
             </li>
 
             <li class="nav-item">
-                
+
             </li>
 
             <!-- Code input -->
@@ -57,18 +56,18 @@
                     </div>
 
                     <div class="modal-body">
-                        <form method="post" asp-page-handler="tryAddUser"> 
+                        <form method="post" asp-page-handler="tryAddUser">
                             <div class="input-group mt-1">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" >Username</span>
+                                    <span class="input-group-text">Username</span>
                                 </div>
                                 <input type="text" class="form-control">
                             </div>
                             <div class="input-group mt-1">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" >Email</span>
+                                    <span class="input-group-text">Email</span>
                                 </div>
-                                <input type="email" class="form-control"  placeholder="example@example.com">
+                                <input type="email" class="form-control" placeholder="example@example.com">
                             </div>
                             <div class="input-group mt-1">
                                 <div class="input-group-prepend">
@@ -119,9 +118,9 @@
                         <form>
                             <div class="input-group mt-1">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" >Username</span>
+                                    <span class="input-group-text">Username</span>
                                 </div>
-                                <input type="text" class="form-control"  placeholder="username">
+                                <input type="text" class="form-control" placeholder="username">
                             </div>
                             <div class="input-group mt-1">
                                 <div class="input-group-prepend">
@@ -132,7 +131,7 @@
                             <button type="button" class="btn btn-success ml-auto mt-2" type="submit">Submit</button>
                         </form>
                     </div>
-                
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
@@ -145,11 +144,31 @@
     </nav>
 </header>
 <p>
-    <input type="submit" value="@Model.Label" class="btn btn-primary"/>
+    <input type="submit" value="@Model.Label" class="btn btn-primary" />
 </p>
-<body>
-<div>
 
-</div>
+
+<body>
+
+    @await Component.InvokeAsync("Header")
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Website_Hoekstra - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
