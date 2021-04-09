@@ -84,7 +84,6 @@ namespace Website_Hoekstra.Pages
                 {
                     file.CopyTo(fs);
                 }
-
             }
         }
 

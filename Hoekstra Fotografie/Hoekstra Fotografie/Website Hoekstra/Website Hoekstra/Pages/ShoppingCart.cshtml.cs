@@ -11,7 +11,7 @@ namespace Website_Hoekstra.Pages
     public class ShoppingCartModel : PageModel
     {
         public List<PhotosOrdered> PhotosOrder { get; set; }
-        double totalPrice = 0;
+        float totalPrice = 0;
         public void OnGet()
         {
         }
@@ -82,14 +82,14 @@ namespace Website_Hoekstra.Pages
         }
 
 
-        public double GetPrice()
+        public string GetPrice()
         {
             totalPrice = totalPrice / 4; //delen door 4 want gaat 4 keer door deze loop in de cart page
             if (ReturnDiscount(PhotosOrder) == 15)
             {
                 totalPrice = totalPrice / 100 * 85; 
             }
-            return totalPrice;
+            return totalPrice.ToString("0.00");
         }
 
         public int ReturnDiscount(List<PhotosOrdered> TotalPhotos)
