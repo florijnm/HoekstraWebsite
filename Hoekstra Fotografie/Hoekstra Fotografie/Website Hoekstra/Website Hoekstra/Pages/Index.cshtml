@@ -6,7 +6,19 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>Weet je niet</p>
-    <p>Hallo kerels</p>
+    @* @foreach (var item in Model.Users) *@
+    @* { *@
+    @*     <p> Name: @item.first_name @item.last_name admin: @item.admin</p> *@
+    @* } *@
+    <p><a href="#WebshopModel"><img src=Resources\concert.png"></a></p>
+    <img id ="html" src="..\..\..\HomepageImages\concert.png" alt="Pop foto's" style="width:500px;height:600px;">
+   <img src="./../HomepageImages/concert.png" alt="Pop foto's" style="width:500px;height:600px;">
+    <img id ="html" src="..\HomepageImages\urban-exploration.jpg" alt="Urban exploration" style="width:500px;height:600px;">
+    <p>Users:</p>
+    @* @foreach (var item in Model.Users) *@
+    @* { *@
+    @*     <p> Name: @item.first_name @item.last_name admin: @item.admin</p> *@
+    @* } *@
+    <p>Hier komt informatie over uw bedrijf/uzelf</p>
+  
 </div>

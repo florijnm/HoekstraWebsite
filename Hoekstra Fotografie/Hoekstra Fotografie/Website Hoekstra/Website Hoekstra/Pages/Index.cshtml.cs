@@ -16,6 +16,13 @@ namespace Website_Hoekstra.Pages
         {
             _logger = logger;
         }
+        public List<user_controller> Users
+        {
+            get
+            {
+                return new DBRepos().GetUsers();
+            }
+        }
 
         public void OnGet()
         {
