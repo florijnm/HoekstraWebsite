@@ -18,6 +18,12 @@
         <input type="text" placeholder="voer prijs in" value="@Model.NewPhoto.price" name="price" />
         <button type="submit">Upload foto</button>
     </form>
+    <ul>
+        @foreach (var order in Model.Orders)
+        {
+            <li>Order: @order.order_id User: @order.user_id</li>
+        }
+    </ul>
 </div>
 
 <a asp-page="TestPageOrdersToevoegen">Oke</a>
