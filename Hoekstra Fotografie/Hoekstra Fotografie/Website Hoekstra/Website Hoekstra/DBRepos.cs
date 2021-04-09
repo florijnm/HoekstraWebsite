@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Website_Hoekstra.Pages;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Website_Hoekstra
 {
@@ -91,9 +92,27 @@ namespace Website_Hoekstra
             
         }
 
-        internal bool verifyPass(login_user loginUser, string password)
+        public bool verifyPass(login_user loginUser, string hashedPassWithSalt)
         {
-            throw new NotImplementedException();
+            var passwordAndHash = hashedPassWithSalt.Split(':');
+            if (passwordAndHash == null || passwordAndHash.Length != 2)
+            {
+                return false;
+            }
+            var salt = Convert.FromBase64String(passwordAndHash[1]);
+            if (salt == null)
+            {
+                return false;
+
+            }
+
+
+            var hashOfPasswordToCheck = hashPass(loginUser.loginPassword, salt, true);
+            if (String.Compare(passwordAndHash[0], hashOfPasswordToCheck) == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         public List<category_ids> GetCategorie()
@@ -162,6 +181,39 @@ namespace Website_Hoekstra
             var connect = Connect();
             int price = connect.QuerySingleOrDefault<int>("SELECT * FROM pictures p INNER JOIN pictures_orders po ON p.picture_id = po.picture_id WHERE po.order_id = @order_id", photos);
             return price;
+        }
+        public user_controller UserByID = new user_controller();
+
+
+        public user_controller GetUserByUserID(string username)
+        {
+            var connect = Connect();
+            List<user_controller> usercheckers = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
+            foreach (var user in usercheckers)
+            {
+                if (user.username == username)
+                {
+                    UserByID = user;
+                    return UserByID;
+                }
+            }
+            return null;
+        }
+
+        public user_controller UserByTheirID = new user_controller();
+        public user_controller GetUserByID(int user_id)
+        {
+            var connect = Connect();
+            List<user_controller> getuser = connect.Query<user_controller>(sql: "SELECT * FROM users").ToList();
+            foreach (var user in getuser)
+            {
+                if (user.user_id == user_id)
+                {
+                    UserByTheirID = user;
+                    return UserByTheirID;
+                }
+            }
+            return null;
         }
     }
 }

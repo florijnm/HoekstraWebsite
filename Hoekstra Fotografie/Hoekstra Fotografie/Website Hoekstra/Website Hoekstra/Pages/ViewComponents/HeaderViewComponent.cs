@@ -101,7 +101,7 @@ namespace Website_Hoekstra.Pages.ViewComponents
                 {
                     if (String.Compare(LoginUser.loginUsername,dbUser.username) == 0)
                     {
-                        if (new DBRepos().verifyPass(loginUser: LoginUser, password: dbUser.password))
+                        if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
                         {
                             User.username = dbUser.username;
                             User.user_id = dbUser.user_id;

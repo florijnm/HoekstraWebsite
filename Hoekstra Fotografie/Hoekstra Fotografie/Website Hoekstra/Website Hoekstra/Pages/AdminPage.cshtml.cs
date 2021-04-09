@@ -12,6 +12,7 @@ namespace Website_Hoekstra.Pages
 {
     public class AdminPageModel : PageModel
     {
+        [BindProperty] public IFormFile PhotoImport { get; set; }
         [BindProperty] public ValuePhoto NewPhoto { get; set; } = new ValuePhoto();
         [BindProperty] public string Label { get; set; }
         
@@ -19,9 +20,11 @@ namespace Website_Hoekstra.Pages
         {
             //string cookieStr = Request.Cookies["cookieLogin"];
             string SessionCookie = HttpContext.Session.GetString("LoginSession");
+            DBRepos repos = new DBRepos();
+            user_controller user = repos.GetUserByID(Convert.ToInt32(SessionCookie));
             if (SessionCookie != null)
             {
-                Label = "Welcome, " + FirstLetterToUpper(SessionCookie.ToString()) + "!";
+                Label = "Welcome, " + FirstLetterToUpper(user.username.ToString()) + "!";
             }
         }
 
@@ -56,20 +59,23 @@ namespace Website_Hoekstra.Pages
 
         public void OnPost()
         {
+            
         }
 
-
-
+        
+        
         public void OnPostAddPhoto()
         {
+            
+            
             if (ModelState.IsValid)
             {
                 new DBRepos().AddPhoto(NewPhoto);
-                
-                //using (FileStream fs = new FileStream("wwwroot/Images", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
-                //{
-                //    file.CopyTo(fs);
-                //}
+                IFormFile file = Request.Form.Files["path"];
+                using (FileStream fs = new FileStream("wwwroot/Images", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
+                {
+                    file.CopyTo(fs);
+                }
 
             }
         }

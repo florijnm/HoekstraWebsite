@@ -69,3 +69,63 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.tableCart{
+   border-radius: 5px;
+   font-size: 12px;
+   font-weight: normal;
+   border: none;
+   border-collapse: collapse;
+   width: 100%;
+   max-width: 100%;
+   white-space: nowrap;
+   background-color: white;
+}
+
+.tableCart td, .tableCart th{
+    text-align: center;
+    padding: 8px;
+}
+
+.tableCart td{
+    border-right: 1px solid #f8f8f8;
+    font-size: 18px;
+}
+
+.tableCart th{
+    color: black;
+    background: white;
+    font-size: 23px;
+}
+
+@media(max-width: 767px){
+    .tableCart{
+        display: block;
+        width: auto;
+    }
+    .table-wrapper:before {
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+
+    .tableCart td, .tableCart th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+}
+
+.CenterContent{
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+}

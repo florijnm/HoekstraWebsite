@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,19 +11,19 @@ namespace Website_Hoekstra.Pages
     public class ShoppingCartModel : PageModel
     {
         public List<PhotosOrdered> PhotosOrder { get; set; }
-
+        double totalPrice = 0;
         public void OnGet()
         {
         }
-
+        [BindProperty] public ValuePhoto orderdPhotos { get; set;}
         [BindProperty] public PhotosOrdered photos { get; set; } = new PhotosOrdered();
         [BindProperty] public login_user user { get; set; }
         [BindProperty] public user_controller IdUser { get; set; }
 
-        public void OnPostAddPhotoOrder(int picture_id)
+        public IActionResult OnPostAddPhotoOrder(int picture_id)
         {
             photos.picture_id = picture_id;
-            int SessionCookie = 3 ; //User_id gekregen van cookie
+            int SessionCookie = Convert.ToInt32(HttpContext.Session.GetString("LoginSession"));
             IdUser.user_id = SessionCookie;
             photos.order_id = SessionCookie;
             if (SessionCookie > 0)
@@ -35,6 +36,7 @@ namespace Website_Hoekstra.Pages
                     PhotosOrder.Add(photos);
                     new DBRepos().PhotoOrder(photos);
                     SessionExtensions.Set(HttpContext.Session, "PhotosOrder", PhotosOrder);
+                    return Page();
                 }
                 else
                 {
@@ -43,18 +45,28 @@ namespace Website_Hoekstra.Pages
                     {
                         PhotosOrder.Add(photos);
                         new DBRepos().PhotoOrder(photos);
+                        SessionExtensions.Set(HttpContext.Session, "PhotosOrder", PhotosOrder);
+                        return Page();
                     }
                     else
                     {
-                        throw new NotImplementedException(); //Waarschuwing geven van dat dit product al in winkelwagen zit
+                        return Page(); //Misschien duidelijk aangeven dat hij er al in zat
                     }
-                    SessionExtensions.Set(HttpContext.Session, "PhotosOrder", PhotosOrder);
+                    
                 }
             }
             else
             {
-                throw new NotImplementedException(); //Hier moet een waarschuwing komen dat er nog niet ingelogd is
+                return RedirectToPage("Login");
             }
+        }
+
+        public ValuePhoto GetOrderPhoto(int picture_id)
+        {
+            ValuePhoto photos = new DBRepos().GetById(picture_id);
+            totalPrice += photos.price; 
+            
+            return photos;
         }
 
         public int Exists(List<PhotosOrdered> photos, int id)
@@ -70,11 +82,26 @@ namespace Website_Hoekstra.Pages
         }
 
 
-        public int GetPrice()
+        public double GetPrice()
         {
-            return new DBRepos().PricePhoto(photos);
+            totalPrice = totalPrice / 4; //delen door 4 want gaat 4 keer door deze loop in de cart page
+            if (ReturnDiscount(PhotosOrder) == 15)
+            {
+                totalPrice = totalPrice / 100 * 85; 
+            }
+            return totalPrice;
         }
 
-       
+        public int ReturnDiscount(List<PhotosOrdered> TotalPhotos)
+        {
+            if (TotalPhotos.Count() >= 3)
+            {
+                return 15;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
