@@ -15,7 +15,7 @@ namespace Website_Hoekstra.Pages
         //pls kill
         private readonly user_controller User;
         private readonly login_user LoginUser;
-        private readonly string Label;
+        public string Label;
 
         public IndexModel(ILogger<IndexModel> logger)
         {
@@ -23,7 +23,7 @@ namespace Website_Hoekstra.Pages
             
             User = new user_controller();
             LoginUser = new login_user();
-            Label = "tyfus";
+            Label = "test";
         }
         public List<user_controller> Users
         {

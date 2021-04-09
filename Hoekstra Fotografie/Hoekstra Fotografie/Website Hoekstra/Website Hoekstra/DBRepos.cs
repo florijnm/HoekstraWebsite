@@ -24,6 +24,13 @@ namespace Website_Hoekstra
             return users;
         }
 
+        // public List<user_controller> GetUsernames()
+        // {
+        //     var connect = Connect();
+        //     List<user_controller> usernames = connect.Query<user_controller>("SELECT username FROM users").ToList();
+        //     return usernames;
+        // }
+
         public bool AddPhoto(ValuePhoto photo)
         {
             var connect = Connect();

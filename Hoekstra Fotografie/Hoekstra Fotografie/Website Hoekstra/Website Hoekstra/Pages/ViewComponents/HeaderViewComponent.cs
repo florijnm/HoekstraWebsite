@@ -15,6 +15,14 @@ namespace Website_Hoekstra.Pages.ViewComponents
         public string testStringName { get; set; }
     }
     
+    public class LoginHandler
+    {
+        public string testStringName { get; set; }
+        public user_controller UserList { get; set; }
+
+        public string username;
+
+    }
     
     public class HeaderViewComponent : ViewComponent
     {
@@ -28,25 +36,37 @@ namespace Website_Hoekstra.Pages.ViewComponents
         public HeaderViewComponent()
         {
             User = new user_controller();
+
+            User.admin = false;
+            User.email = "honossillie@gmail.com";
+            User.first_name = "test";
+            User.last_name = "Riemersma";
+            User.password = "tC4J3YOw5Ev0oNHZfYzcZ3GvjF6h4sY8U7OIkGrx4Lc=:BMqmpMODnV+Kjhc38H2Apg==";
+            User.username = "test";
+            User.user_id = 22;
+            
             LoginUser = new login_user();
             Label = "tyfuas";
             test = "tyfus";
         }
 
-        public IViewComponentResult Invoke(string testString = "null")
+        public IViewComponentResult Invoke()
         {
-            List<testString> testStrings = new List<testString>();
-
+            List<LoginHandler> LoginHandlers = new List<LoginHandler>();
+            
+            
             for (int i = 0; i < 10; i++)
             {
-                testStrings.Add(new testString()
+                LoginHandlers.Add(new LoginHandler()
                     {
-                        testStringName = "dude nummer : " + i.ToString()
+                        
+                        testStringName = "dude nummer : " + i,
+                        UserList = User
                     }
                 );
             }
 
-            return View(testStrings);
+            return View(LoginHandlers);
         }
 
         // public async Task<IViewComponentResult> InvokeAsync()
