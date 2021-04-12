@@ -1,0 +1,20 @@
+﻿@page
+@model Website_Hoekstra.Pages.TestPageOrdersToevoegenModel
+@{
+}
+
+@foreach (var item in Model.photo)
+{
+    <form method="post">
+        <div>
+            titel -- @item.title
+            beschrijving -- @item.description
+            prijs -- @item.price
+            <img style="max-width: 100px; max-height: 100px;" src="~/Images/@item.path" />
+            <button type="submit" asp-page="ShoppingCart" asp-page-handler="AddPhotoOrder" asp-route-picture_id="@item.picture_id" >Voeg toe</button>
+        </div>
+        <br />
+    </form>
+
+}
+

@@ -1,0 +1,36 @@
+﻿@page
+@model Website_Hoekstra.Pages.ShoppingCartModel
+@{
+}
+    <div class="table-wrapper">
+        <table class="tableCart">
+            <tr>
+                <th>Foto</th>
+                <th>Naam</th>
+                <th>Beschrijving</th>
+                <th>prijs</th>
+            </tr>
+            @if (Model.PhotosOrder != null)
+            {
+                @foreach (var Photo in Model.PhotosOrder)
+                {
+                    <tr>
+                        <td><img src="~/Images/@Model.GetOrderPhoto(Photo.picture_id).path" class="imgCart" alt="Weet je niet" /></td>
+                        <td>@Model.GetOrderPhoto(Photo.picture_id).title</td>
+                        <td>@Model.GetOrderPhoto(Photo.picture_id).description</td>
+                        <td>€@Model.GetOrderPhoto(Photo.picture_id).price</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+<div class="CenterContent">
+    <div>
+        <p>
+            Totaal prijs : € @Model.GetPrice()
+        </p>
+        <p>
+            Korting: @Model.ReturnDiscount(Model.PhotosOrder) %
+        </p>
+    </div>
+</div>

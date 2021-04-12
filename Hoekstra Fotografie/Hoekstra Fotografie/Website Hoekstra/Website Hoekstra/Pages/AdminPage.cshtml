@@ -1,0 +1,81 @@
+﻿@page
+@model Website_Hoekstra.Pages.AdminPageModel
+@{
+}
+@Model.Label
+
+<a asp-page="TestPageOrdersToevoegen">Ga naar testpagina orders plaatsen</a>
+<div class="ContainerPictureInfo">
+    <form method="post" asp-page-handler="AddPhoto">
+        <div class="container-image">
+            <div class="image-description">
+                <input type="file" value="path" name="path" accept="image/*" />
+            </div>
+            <div class="image-description btn-group-vertical">
+                Titel Foto
+                <input placeholder="Titel van de foto" value="@Model.NewPhoto.title" name="title" />
+                Beschrijving
+                <input placeholder="Een beschrijving van de foto" value="@Model.NewPhoto.description" name="description" />
+                Categorie:
+                <select name="category_id">
+                    <option value="">Kies een categorie</option>
+                    @foreach (var item in Model.category)
+                    {
+                        <option value="@item.category_id">@item.title</option>
+                    }
+                </select>
+                Prijs Foto:
+                <input type="text" placeholder="voer prijs in" value="@Model.NewPhoto.price" name="price" />
+
+                <button type="submit">Upload foto</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="ContainerTable">
+    <p class="text-center TextInfo">Alle foto's</p>
+    <form method="post">
+        <table class="picturesTable">
+            <tr>
+                <th>Titel</th>
+                <th>Bechrijving</th>
+                <th>Path</th>
+                <th>Prijs</th>
+                <th>Foto</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.photo)
+            {
+                <tr>
+                    <td>@item.title</td>
+                    <td>@item.description</td>
+                    <td>@item.path</td>
+                    <td>@item.price</td>
+                    <td><img style="max-width: 100px; max-height: 100px;" src="~/Images/@item.path" /></td>
+                    <td><button type="submit" asp-page="UpdatePhoto" asp-route-picture_id="@item.picture_id">Verander informatie</button></td>
+                    <td><button type="submit" asp-page-handler="ManageOrders" asp-route-picture_id="@item.picture_id"> Verwijder foto</button></td>
+                </tr>
+            }
+        </table>
+    </form>
+</div>
+
+<p class="text-center TextInfo">Alle orders</p>
+<table class="tableOrder">
+    <tr>
+        <th>Order id</th>
+        <th>Username</th>
+        <th>Aantal Foto's</th>
+    </tr>
+    @foreach (var order in Model.Orders)
+    {
+        <tr class="OrderBorder">
+            <td class="OrderBorder MooieTekst">@order.order_id</td>
+            <td class="OrderBorder MooieTekst">@Model.UserByOrder(order.user_id)</td>
+            <td class="OrderBorder MooieTekst">@Model.TotalPhotoByOrder(order.order_id)</td>
+        </tr>
+    }
+</table>

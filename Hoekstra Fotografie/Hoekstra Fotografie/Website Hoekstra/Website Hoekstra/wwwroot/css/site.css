@@ -1,0 +1,257 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.tableCart{
+   border-radius: 5px;
+   font-size: 12px;
+   font-weight: normal;
+   border: none;
+   border-collapse: collapse;
+   width: 100%;
+   max-width: 100%;
+   white-space: nowrap;
+   background-color: white;
+}
+
+.tableCart td, .tableCart th{
+    text-align: center;
+    padding: 8px;
+}
+
+.tableCart td{
+    border-right: 1px solid #f8f8f8;
+    font-size: 18px;
+}
+
+.tableCart th{
+    color: black;
+    background: white;
+    font-size: 23px;
+}
+
+@media(max-width: 767px){
+    .tableCart{
+        display: block;
+        width: auto;
+    }
+    .table-wrapper:before {
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+
+    .tableCart td, .tableCart th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+}
+
+.CenterContent{
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.imgCart{
+    max-width: 100px;
+}
+
+.container-image{
+    padding: 20px;
+}
+
+.image-description{
+    width: 50%;
+    float: left;
+    padding: 20px;
+    position: relative;
+}
+
+.tableOrder {
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+@media(max-width: 767px) {
+    .tableOrder {
+        display: block;
+    }
+
+    .tableOrder td, .tableOrder th {
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        font-size: 16px;
+        text-overflow: ellipsis;
+    }
+}
+
+.tableOrder td, .tableOrder th {
+    text-align: center;
+    padding: 16px;
+}
+
+.tableOrdert td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 18px;
+}
+
+.tableOrder th {
+    color: black;
+    background: white;
+    font-size: 23px;
+}
+
+.tableOrder th{
+    border: 1px solid black;
+}
+
+.OrderBorder {
+    border: 1px solid black;
+}
+
+.picturesTable {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.picturesTable td, .picturesTable th {
+    text-align: center;
+    padding: 16px;
+}
+
+.picturesTable td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 18px;
+}
+
+.picturesTable th {
+    color: black;
+    background: white;
+    font-size: 23px;
+}
+
+@media(max-width: 767px) {
+    .picturesTable {
+        display: block;
+        width: auto;
+    }
+
+    .picturesTable td, .picturesTable th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 16px;
+        text-overflow: ellipsis;
+    }
+}
+
+.ContainerTable{
+    margin-bottom: 100px;
+}
+
+.TextInfo {
+    font-size: 23px;
+    color: black;
+    font-weight: normal;
+}
+
+.MooieTekst{
+    font-size: 16px;
+}
