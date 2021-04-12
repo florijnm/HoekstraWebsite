@@ -19,10 +19,7 @@ namespace Website_Hoekstra.Pages
 
         public List<user_controller> Users
         {
-            get
-            {
-                return new DBRepos().GetUsers();
-            }
+            get { return new DBRepos().GetUsers(); }
         }
 
         public void OnGet()
@@ -77,7 +74,7 @@ namespace Website_Hoekstra.Pages
                 alertDanger = true;
             }
         }
-        
+
         private bool FormFilled()
         {
             if (LoginUser.loginPassword != null & LoginUser.loginUsername != null)
@@ -85,41 +82,45 @@ namespace Website_Hoekstra.Pages
                 return true;
             }
             else return false;
-
+        }
 
         public bool CheckUsernameAvailable()
-        {
-
-            foreach (var user in Users)
             {
-                if (User.username.Equals(user.username))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
 
-        public bool VerifyPassword()
-        {
-            foreach (var dbUser in Users)
-            {
-                if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
+                foreach (var user in Users)
                 {
-                    if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
+                    if (User.username.Equals(user.username))
                     {
-                        User.admin = dbUser.admin;
-                        User.username = dbUser.username;
-                        User.password = dbUser.password;
-                        User.username = dbUser.username;
-                        User.user_id = dbUser.user_id;
-                        User.password = dbUser.password;
-                        return true;
+                        return false;
                     }
-                    return false;
                 }
+
+                return true;
             }
-            return false;
+
+            public bool VerifyPassword()
+            {
+                foreach (var dbUser in Users)
+                {
+                    if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
+                    {
+                        if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
+                        {
+                            User.admin = dbUser.admin;
+                            User.username = dbUser.username;
+                            User.password = dbUser.password;
+                            User.username = dbUser.username;
+                            User.user_id = dbUser.user_id;
+                            User.password = dbUser.password;
+                            return true;
+                        }
+
+                        return false;
+                    }
+                }
+
+                return false;
+            }
         }
     }
-}
+
