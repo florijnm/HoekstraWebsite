@@ -182,25 +182,17 @@ namespace Website_Hoekstra
             int price = connect.QuerySingleOrDefault<int>(sql: "SELECT price FROM pictures WHERE picture_id = @picture_id", photo);
             return price;
         }
+        
+        public user_controller UserByID = new user_controller();
 
-        //public int PriceTotal(PhotosOrdered photos)
-        //{
-        //    var connect = Connect();
-        //    int price = connect.QuerySingleOrDefault<int>("SELECT * FROM pictures p INNER JOIN pictures_orders po ON p.picture_id = po.picture_id WHERE po.order_id = @order_id", photos);
-        //    return price;
-        //}
-        //SELECT* FROM orders WHERE user_id = '1' ORDER BY order_id DESC LIMIT 1;
-
+        
         public int LastOrder(user_controller UserId)
         {
             var connect = Connect();
             int OrderId = connect.QuerySingleOrDefault<int>("SELECT order_id FROM orders WHERE user_id = @user_id ORDER BY order_id DESC LIMIT 1;", UserId);
             return OrderId;
         }
-
-        public user_controller UserByID = new user_controller();
-
-
+        
         public user_controller GetUserByUserID(string username)
         {
             var connect = Connect();

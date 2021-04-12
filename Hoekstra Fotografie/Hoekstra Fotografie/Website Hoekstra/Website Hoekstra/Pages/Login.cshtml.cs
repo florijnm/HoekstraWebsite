@@ -14,19 +14,17 @@ namespace Website_Hoekstra.Pages
     {
         [BindProperty] public user_controller User { get; set; } = new user_controller();
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
-        [BindProperty] public string Label { get; set; }
+        public bool alertSuccess = false;
+        public bool alertDanger = false;
 
         public List<user_controller> Users
         {
-            get
-            {
-                return new DBRepos().GetUsers();
-            }
+            get { return new DBRepos().GetUsers(); }
         }
 
         public void OnGet()
         {
-            Label = "false";
+
         }
 
 
@@ -37,55 +35,70 @@ namespace Website_Hoekstra.Pages
 
         public void OnPostTryAddUser()
         {
-            if (CheckUsernameAvailable())
+            if (ModelState.IsValid)
             {
-                new DBRepos().tryAddUser(User);
-            }
-            else
-            {
-
+                if (CheckUsernameAvailable())
+                {
+                    new DBRepos().tryAddUser(User);
+                }
             }
         }
 
         public void OnPostVerifyUser()
         {
-            if (VerifyPassword())
+            if (FormFilled())
             {
-                DBRepos repos = new DBRepos();
-                user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
-                // login succesvol
-                Label = "true";
-                HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
-                if (user.admin == true)
+                if (VerifyPassword())
                 {
-                    Response.Redirect("adminpage");
+                    alertSuccess = true;
+                    DBRepos repos = new DBRepos();
+                    user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
+                    // login succesvol
+                    HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
+                    if (user.admin == true)
+                    {
+                        Response.Redirect("adminpage");
+                    }
+                    else
+                    {
+                        Response.Redirect("index");
+                    }
                 }
                 else
                 {
-                    Response.Redirect("Error");
+                    alertDanger = true;
                 }
             }
             else
             {
-                Label = "false";
+                alertDanger = true;
             }
         }
-        public bool CheckUsernameAvailable()
-        {
 
-            foreach (var dbUser in Users)
+        private bool FormFilled()
+        {
+            if (LoginUser.loginPassword != null & LoginUser.loginUsername != null)
             {
-                if (User.username.Equals(dbUser.username))
-                {
-                    return false;
-                }
+                return true;
             }
-            return true;
+            else return false;
         }
 
-        public bool VerifyPassword()
-        {
-            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null)
+        public bool CheckUsernameAvailable()
+            {
+
+                foreach (var user in Users)
+                {
+                    if (User.username.Equals(user.username))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public bool VerifyPassword()
             {
                 foreach (var dbUser in Users)
                 {
@@ -101,13 +114,13 @@ namespace Website_Hoekstra.Pages
                             User.password = dbUser.password;
                             return true;
                         }
+
                         return false;
                     }
                 }
 
                 return false;
             }
-            return false;
         }
     }
-}
+
