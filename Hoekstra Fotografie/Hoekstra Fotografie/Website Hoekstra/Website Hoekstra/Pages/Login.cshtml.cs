@@ -14,9 +14,6 @@ namespace Website_Hoekstra.Pages
     {
         [BindProperty] public user_controller User { get; set; } = new user_controller();
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
-        [BindProperty] public string Label { get; set; }
-        
-
 
         public List<user_controller> Users
         {
@@ -28,7 +25,6 @@ namespace Website_Hoekstra.Pages
 
         public void OnGet()
         {
-            Label = "false";
 
         }
 
@@ -38,18 +34,6 @@ namespace Website_Hoekstra.Pages
 
         }
 
-        public void OnPostTryAddUser()
-        {
-            if (CheckUsernameAvailable())
-            {
-                new DBRepos().tryAddUser(User);
-            }
-            else
-            {
-
-            }
-        }
-
         public void OnPostVerifyUser()
         {
             if (VerifyPassword())
@@ -57,7 +41,6 @@ namespace Website_Hoekstra.Pages
                 DBRepos repos = new DBRepos();
                 user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
                 // login succesvol
-                Label = "true";
                 HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
                 if (user.admin == true)
                 {
@@ -68,24 +51,7 @@ namespace Website_Hoekstra.Pages
                     Response.Redirect("Error");
                 }
             }
-            else
-            {
-                Label = "false";
-            }
         }
-        public bool CheckUsernameAvailable()
-        {
-
-            foreach (var dbUser in Users)
-            {
-                if (User.username.Equals(dbUser.username))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public bool VerifyPassword()
         {
             if (LoginUser.loginUsername != null && LoginUser.loginUsername != null)
