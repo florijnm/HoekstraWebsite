@@ -2,7 +2,7 @@
 @model Website_Hoekstra.Pages.Register
 
 
-<div>
+<div class="container p-3 my-3 bg-light text-white border" style="max-width: 500px">
     <form method="post" asp-page-handler="tryAddUser">
         @* <input type="text" placeholder="Username" value="@Model.User.username" name="username" /><br> *@
         @* <input type="email" placeholder="Email" value="@Model.User.email" name="email" /><br> *@
@@ -10,7 +10,12 @@
         @* <input type="text" placeholder="Last Name" value="@Model.User.last_name" name="last_name"><br> *@
         @* <input type="password" placeholder="Password" value="@Model.User.password" name="password"> *@
 
-        
+        <div class="alert alert-success @(Model.alertSuccess ? "d-flex" : "d-none")">
+            <strong>Succes! </strong> Registreren geslaagd.
+        </div>
+        <div class="alert alert-danger @(Model.alertDanger ? "d-flex" : "d-none")">
+          <strong>Waarschuwing!</strong> Gegevens niet correct of  niet ingevuld.
+        </div>
         <div class="input-group mt-1">
             <div class="input-group-prepend">
                 <span class="input-group-text" >Username</span>

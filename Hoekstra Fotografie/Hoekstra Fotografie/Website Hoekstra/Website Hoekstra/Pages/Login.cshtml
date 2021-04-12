@@ -1,13 +1,20 @@
 ﻿@page
 @model Website_Hoekstra.Pages.LoginModel
 
-<div>
+
+<div class="container p-3 my-3 bg-light text-white border" style="max-width: 500px">
+    <div class="alert alert-success @(Model.alertSuccess ? "d-flex" : "d-none")">
+        <strong>Succes! </strong> Registreren geslaagd.
+    </div>
+    <div class="alert alert-danger @(Model.alertDanger ? "d-flex" : "d-none")">
+        <strong>Waarschuwing!</strong> Gegevens niet correct of  niet ingevuld.
+    </div>
     <form method="post" asp-page-handler="verifyUser">
         <div class="input-group mt-1">
             <div class="input-group-prepend">
                 <span class="input-group-text">Username</span>
             </div>
-            <input type="text" class="form-control"  placeholder="username" value="@Model.LoginUser.loginUsername" name="loginUsername">
+            <input type="text" class="form-control" placeholder="username" value="@Model.LoginUser.loginUsername" name="loginUsername">
         </div>
         <div class="input-group mt-1">
             <div class="input-group-prepend">

@@ -14,6 +14,8 @@ namespace Website_Hoekstra.Pages
     {
         [BindProperty] public user_controller User { get; set; } = new user_controller();
         [BindProperty] public login_user LoginUser { get; set; } = new login_user();
+        public bool alertSuccess = false;
+        public bool alertDanger = false;
 
         public List<user_controller> Users
         {
@@ -36,45 +38,67 @@ namespace Website_Hoekstra.Pages
 
         public void OnPostVerifyUser()
         {
-            if (VerifyPassword())
+            if (FormFilled())
             {
-                DBRepos repos = new DBRepos();
-                user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
-                // login succesvol
-                HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
-                if (user.admin == true)
+                if (VerifyPassword())
                 {
-                    Response.Redirect("adminpage");
+                    Console.WriteLine("goed");
+                    alertSuccess = true;
+                    DBRepos repos = new DBRepos();
+                    user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
+                    // login succesvol
+                    HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
+                    if (user.admin == true)
+                    {
+                        Response.Redirect("adminpage");
+                    }
+                    else
+                    {
+                        Response.Redirect("index");
+                    }
                 }
                 else
                 {
-                    Response.Redirect("Error");
+                    Console.WriteLine("foat");
+                    alertDanger = true;
                 }
             }
+            else
+            {
+                Console.WriteLine("ander fout");
+                Console.WriteLine("pass " +  LoginUser.loginPassword);
+                Console.WriteLine("name " +  LoginUser.loginUsername);
+                alertDanger = true;
+            }
         }
+        
+        private bool FormFilled()
+        {
+            if (LoginUser.loginPassword != null & LoginUser.loginUsername != null)
+            {
+                return true;
+            }
+            else return false;
+        }
+
         public bool VerifyPassword()
         {
-            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null)
+            foreach (var dbUser in Users)
             {
-                foreach (var dbUser in Users)
+                if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
                 {
-                    if (String.Compare(LoginUser.loginUsername, dbUser.username) == 0)
+                    if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
                     {
-                        if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
-                        {
-                            User.admin = dbUser.admin;
-                            User.username = dbUser.username;
-                            User.password = dbUser.password;
-                            User.username = dbUser.username;
-                            User.user_id = dbUser.user_id;
-                            User.password = dbUser.password;
-                            return true;
-                        }
-                        return false;
+                        User.admin = dbUser.admin;
+                        User.username = dbUser.username;
+                        User.password = dbUser.password;
+                        User.username = dbUser.username;
+                        User.user_id = dbUser.user_id;
+                        User.password = dbUser.password;
+                        return true;
                     }
+                    return false;
                 }
-
-                return false;
             }
             return false;
         }

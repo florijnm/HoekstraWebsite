@@ -13,6 +13,8 @@ namespace Website_Hoekstra.Pages
     public class Register : PageModel
     {
         [BindProperty] public user_controller User { get; set; } = new user_controller();
+        public bool alertSuccess = false;
+        public bool alertDanger = false;
 
         public void OnGet()
         {
@@ -29,26 +31,49 @@ namespace Website_Hoekstra.Pages
         
         public void OnPostTryAddUser()
         {
-            if (CheckUsernameAvailable())
+            if (FormFilled())
             {
-                new DBRepos().tryAddUser(User);
+                if (CheckUsernameAvailable())
+                {
+                    new DBRepos().tryAddUser(User);
+                    ClearUser();
+                    alertSuccess = true;
+                }
+                else
+                {
+                    alertDanger = true;
+                }
             }
-            else
-            {
+        }
 
+        private void ClearUser()
+        {
+            User.email = null;
+            User.first_name = null;
+            User.last_name = null;
+            User.password = null;
+            User.username = null;
+        }
+
+        private bool FormFilled()
+        {
+            if (User.email != null & User.first_name != null & User.password != null & User.last_name != null &
+                User.username != null)
+            {
+                return true;
             }
+            else return false;
         }
         
         public bool CheckUsernameAvailable()
         {
-
             foreach (var dbUser in Users)
             {
                 if (User.username.Equals(dbUser.username))
                 {
                     return false;
                 }
-            }
+            } 
             return true;
         }
     }
