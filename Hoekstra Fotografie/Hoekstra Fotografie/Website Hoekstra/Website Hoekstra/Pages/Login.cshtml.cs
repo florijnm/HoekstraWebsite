@@ -40,39 +40,41 @@ namespace Website_Hoekstra.Pages
 
         public void OnPostTryAddUser()
         {
-            if (CheckUsernameAvailable())
+            if (ModelState.IsValid)
             {
-                new DBRepos().tryAddUser(User);
-            }
-            else
-            {
-
+                if (CheckUsernameAvailable())
+                {
+                    new DBRepos().tryAddUser(User);
+                }
             }
         }
 
         public void OnPostVerifyUser()
         {
-            if (VerifyPassword())
-            {
+           
+                if (VerifyPassword())
+                {
                 DBRepos repos = new DBRepos();
                 user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
+
                 // login succesvol
-                Label = "true";
-                HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
-                if (user.admin == true)
-                {
-                    Response.Redirect("adminpage");
+             
+                    HttpContext.Session.SetString("LoginSession", user.user_id.ToString());
+                    if (user.admin == true)
+                    {
+                        Response.Redirect("adminpage");
+                    }
+                    else
+                    {
+                        Response.Redirect("Index");
+                    }
                 }
-                else
-                {
-                    Response.Redirect("Error");
-                }
-            }
-            else
-            {
-                Label = "false";
-            }
+
+            
+           
         }
+
+
         public bool CheckUsernameAvailable()
         {
 

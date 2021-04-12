@@ -1,6 +1,5 @@
 ﻿@page
 @model Website_Hoekstra.Pages.LoginModel
-
 s
 <div>
     <form method="post" asp-page-handler="tryAddUser">
@@ -23,7 +22,9 @@ s
 <div>
     <form method="post" asp-page-handler="verifyUser">
         <input type="text" placeholder="Username" value="@Model.LoginUser.loginUsername" name="loginUsername" /><br>
+
         <input type="password" placeholder="Password" value="@Model.LoginUser.loginPassword" name="loginPassword">
+    
         <button type="submit">Login</button>
     </form>
 </div>
