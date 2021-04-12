@@ -36,20 +36,7 @@ namespace Website_Hoekstra.Pages
         
         public void OnGet()
         {
-            DBRepos repos = new DBRepos();
-            string SessionCookie = HttpContext.Session.GetString("LoginSession");
-            if (SessionCookie != null)
-            {
-                user_controller user = repos.GetUserByID(Convert.ToInt32(SessionCookie));
-                if (user.admin)
-                {
-                    Response.Redirect("adminpage");
-                }
-                else
-                {
-                    Response.Redirect("Error");
-                }
-            }
+            
         }
     }
 }

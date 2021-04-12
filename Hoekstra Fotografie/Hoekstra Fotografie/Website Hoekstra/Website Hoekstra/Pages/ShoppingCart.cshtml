@@ -15,7 +15,7 @@
                 @foreach (var Photo in Model.PhotosOrder)
                 {
                     <tr>
-                        <td><img src="~/Images/@Model.GetOrderPhoto(Photo.picture_id).path" alt="Weet je niet" /></td>
+                        <td><img src="~/Images/@Model.GetOrderPhoto(Photo.picture_id).path" class="imgCart" alt="Weet je niet" /></td>
                         <td>@Model.GetOrderPhoto(Photo.picture_id).title</td>
                         <td>@Model.GetOrderPhoto(Photo.picture_id).description</td>
                         <td>€@Model.GetOrderPhoto(Photo.picture_id).price</td>

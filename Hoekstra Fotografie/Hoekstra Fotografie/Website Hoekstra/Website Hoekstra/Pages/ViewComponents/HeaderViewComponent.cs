@@ -10,10 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Website_Hoekstra.Pages.ViewComponents
 {
-    public class testString
-    {
-        public string testStringName { get; set; }
-    }
+
     
     public class LoginHandler
     {
@@ -69,98 +66,9 @@ namespace Website_Hoekstra.Pages.ViewComponents
             return View(LoginHandlers);
         }
 
-        // public async Task<IViewComponentResult> InvokeAsync()
-        // {
-        //     return View("SignedOut");
-        // }
-
-
-        //
-        // public async Task<IViewComponentResult> rInvokeAsync()
-        // {
-        //     var user = await User;
-        //     return View(user);
-        // }
-        
-        public List<user_controller> Users
+        public void OnPostTryLogin()
         {
-            get
-            {
-                return new DBRepos().GetUsers();
-            }
-        }
-
-        public void OnGet()
-        {
-            Label = "false";
-            
-        }
-        
-
-        public void OnPost()
-        {
-            
-        }
-
-        public void OnPostTryAddUser()
-        {
-            if (CheckUsernameAvailable())
-            {
-                new DBRepos().tryAddUser(User);
-            }
-            else
-            {
-                
-            }
-        }
-
-        public void OnPostVerifyUser()
-        {
-            if (VerifyPassword())
-            {
-                // login succesvol
-                Label = "true";
-            }
-            else
-            {
-                Label = "false";
-            }
-        }
-        public bool CheckUsernameAvailable()
-        {
-
-            foreach (var dbUser in Users)
-            {
-                if (User.username.Equals(dbUser.username))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public bool VerifyPassword()
-        {
-            if (LoginUser.loginUsername != null && LoginUser.loginUsername != null )
-            {
-                foreach (var dbUser in Users)
-                {
-                    if (String.Compare(LoginUser.loginUsername,dbUser.username) == 0)
-                    {
-                        if (new DBRepos().verifyPass(loginUser: LoginUser, dbUser.password))
-                        {
-                            User.username = dbUser.username;
-                            User.user_id = dbUser.user_id;
-                            User.password = dbUser.password;
-                            return true;
-                        }
-                        return false;
-                    }
-                }
-
-                return false;
-            }
-            return false;
+            Console.WriteLine("in trylogin in component");
         }
     }
 }

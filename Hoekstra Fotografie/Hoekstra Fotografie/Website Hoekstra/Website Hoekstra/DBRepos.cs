@@ -156,7 +156,7 @@ namespace Website_Hoekstra
         {
             var connect = Connect();
             ValuePhoto UpdatedPhoto = connect.QuerySingle<ValuePhoto>(sql: @"UPDATE pictures SET title = @title, description = @description, 
-                                                                            price = @price, path = @path.FileName, category_id = @category_id
+                                                                            price = @price, path = @path, category_id = @category_id
                                                                             WHERE picture_id = @picture_id;
                                                                             SELECT * FROM pictures WHERE picture_id = @picture_id", photo);
             return UpdatedPhoto;
@@ -169,7 +169,7 @@ namespace Website_Hoekstra
             return PhotoAdded;
         }
 
-        public int NewOrder(user_controller user, PhotosOrdered PhotoId)
+        public int NewOrder(user_controller user)
         {
             var connect = Connect();
             int NewOrder = connect.Execute("INSERT INTO orders(user_id) VALUES(@user_id)", user);
@@ -182,16 +182,17 @@ namespace Website_Hoekstra
             int price = connect.QuerySingleOrDefault<int>(sql: "SELECT price FROM pictures WHERE picture_id = @picture_id", photo);
             return price;
         }
-
-        public int PriceTotal(PhotosOrdered photos)
-        {
-            var connect = Connect();
-            int price = connect.QuerySingleOrDefault<int>("SELECT * FROM pictures p INNER JOIN pictures_orders po ON p.picture_id = po.picture_id WHERE po.order_id = @order_id", photos);
-            return price;
-        }
+        
         public user_controller UserByID = new user_controller();
 
-
+        
+        public int LastOrder(user_controller UserId)
+        {
+            var connect = Connect();
+            int OrderId = connect.QuerySingleOrDefault<int>("SELECT order_id FROM orders WHERE user_id = @user_id ORDER BY order_id DESC LIMIT 1;", UserId);
+            return OrderId;
+        }
+        
         public user_controller GetUserByUserID(string username)
         {
             var connect = Connect();
@@ -221,6 +222,13 @@ namespace Website_Hoekstra
                 }
             }
             return null;
+        }
+
+        public int GetPhotosOrder(int order_id)
+        {
+            var connection = Connect();
+            int Photos = connection.QuerySingleOrDefault<int>(sql: "SELECT COUNT(picture_id) FROM pictures_orders WHERE order_id = @order_id", new { order_id = order_id });
+            return Photos;
         }
     }
 }

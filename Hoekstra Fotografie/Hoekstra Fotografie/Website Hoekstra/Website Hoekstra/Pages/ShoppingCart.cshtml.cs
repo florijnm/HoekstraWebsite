@@ -25,13 +25,14 @@ namespace Website_Hoekstra.Pages
             photos.picture_id = picture_id;
             int SessionCookie = Convert.ToInt32(HttpContext.Session.GetString("LoginSession"));
             IdUser.user_id = SessionCookie;
-            photos.order_id = SessionCookie;
+            
             if (SessionCookie > 0)
             {
                 PhotosOrder = SessionExtensions.Get<List<PhotosOrdered>>(HttpContext.Session, "PhotosOrder");
                 if (PhotosOrder == null)
                 {
-                    new DBRepos().NewOrder(IdUser, photos);
+                    new DBRepos().NewOrder(IdUser);
+                    photos.order_id = new DBRepos().LastOrder(IdUser);
                     PhotosOrder = new List<PhotosOrdered>();
                     PhotosOrder.Add(photos);
                     new DBRepos().PhotoOrder(photos);
@@ -43,6 +44,7 @@ namespace Website_Hoekstra.Pages
                     int index = Exists(PhotosOrder, picture_id);
                     if (index == -1)
                     {
+                        photos.order_id = new DBRepos().LastOrder(IdUser);
                         PhotosOrder.Add(photos);
                         new DBRepos().PhotoOrder(photos);
                         SessionExtensions.Set(HttpContext.Session, "PhotosOrder", PhotosOrder);

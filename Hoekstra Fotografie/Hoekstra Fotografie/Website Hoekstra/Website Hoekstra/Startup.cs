@@ -27,6 +27,7 @@ namespace Website_Hoekstra
             services.AddSession();
             services.AddMemoryCache();
             services.AddMvc();
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(20);

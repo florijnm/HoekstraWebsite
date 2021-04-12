@@ -36,6 +36,12 @@ namespace Website_Hoekstra.Pages
             }
         }
 
+        public string UserByOrder(int user_id)
+        {
+            user_controller UserById = new DBRepos().GetUserByID(user_id);
+            return UserById.username;
+        }
+
         public string FirstLetterToUpper(string str)
         {
             if (str == null)
@@ -57,6 +63,12 @@ namespace Website_Hoekstra.Pages
             }
         }
 
+        public int TotalPhotoByOrder(int Order_id)
+        {
+            int TotalPhotos = new DBRepos().GetPhotosOrder(Order_id);
+            return TotalPhotos;
+        }
+
         public List<ValuePhoto> photo
         {
             get
@@ -71,18 +83,15 @@ namespace Website_Hoekstra.Pages
         }
 
         
-        
         public void OnPostAddPhoto()
         {
-            
-            
             if (ModelState.IsValid)
             {
+                PhotoImport = Request.Form.Files["path"];
                 new DBRepos().AddPhoto(NewPhoto);
-                IFormFile file = Request.Form.Files["path"];
                 using (FileStream fs = new FileStream("wwwroot/Images", FileMode.CreateNew, FileAccess.Write, FileShare.Write))
                 {
-                    file.CopyTo(fs);
+                    PhotoImport.CopyTo(fs);
                 }
             }
         }

@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\istock-521206872_0.jpg" />
-    <None Remove="Resources\Two-For-One-Theatre-USA-Featured-Image-.jpg" />
-    <None Remove="Resources\urban-exploration.jpg" />
+    <None Remove="Images\searchicon.png" />
+    <None Remove="Pages\Shared\Icons\search_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,14 +17,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Components" />
-    <Folder Include="Pages\Repositories" />
+    <Resource Include="Images\searchicon.png" />
+    <Resource Include="Pages\Shared\Icons\search_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\istock-521206872_0.jpg" />
-    <Resource Include="Resources\Two-For-One-Theatre-USA-Featured-Image-.jpg" />
-    <Resource Include="Resources\urban-exploration.jpg" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Components" />
+    <Folder Include="Pages\Repositories" />
   </ItemGroup>
 
 </Project>
