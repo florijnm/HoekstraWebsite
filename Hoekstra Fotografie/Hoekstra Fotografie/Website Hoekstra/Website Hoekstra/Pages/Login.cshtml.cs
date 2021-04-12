@@ -36,13 +36,23 @@ namespace Website_Hoekstra.Pages
 
         }
 
+        public void OnPostTryAddUser()
+        {
+            if (ModelState.IsValid)
+            {
+                if (CheckUsernameAvailable())
+                {
+                    new DBRepos().tryAddUser(User);
+                }
+            }
+        }
+
         public void OnPostVerifyUser()
         {
             if (FormFilled())
             {
                 if (VerifyPassword())
                 {
-                    Console.WriteLine("goed");
                     alertSuccess = true;
                     DBRepos repos = new DBRepos();
                     user_controller user = repos.GetUserByUserID(LoginUser.loginUsername);
@@ -59,15 +69,11 @@ namespace Website_Hoekstra.Pages
                 }
                 else
                 {
-                    Console.WriteLine("foat");
                     alertDanger = true;
                 }
             }
             else
             {
-                Console.WriteLine("ander fout");
-                Console.WriteLine("pass " +  LoginUser.loginPassword);
-                Console.WriteLine("name " +  LoginUser.loginUsername);
                 alertDanger = true;
             }
         }
@@ -79,6 +85,19 @@ namespace Website_Hoekstra.Pages
                 return true;
             }
             else return false;
+
+
+        public bool CheckUsernameAvailable()
+        {
+
+            foreach (var user in Users)
+            {
+                if (User.username.Equals(user.username))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool VerifyPassword()
