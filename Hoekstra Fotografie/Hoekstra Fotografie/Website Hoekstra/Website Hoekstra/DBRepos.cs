@@ -42,7 +42,7 @@ namespace Website_Hoekstra
 
             return PhotoAdded == 1;
         }
-
+       
         public bool tryAddUser(user_controller newUser)
         {
             string hashedPass = hashPass(newUser.password);

@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\istock-521206872_0.jpg" />
+    <None Remove="Resources\Two-For-One-Theatre-USA-Featured-Image-.jpg" />
+    <None Remove="Resources\urban-exploration.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="MySql.Data" Version="8.0.23" />
@@ -14,6 +20,12 @@
   <ItemGroup>
     <Folder Include="Pages\Components" />
     <Folder Include="Pages\Repositories" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\istock-521206872_0.jpg" />
+    <Resource Include="Resources\Two-For-One-Theatre-USA-Featured-Image-.jpg" />
+    <Resource Include="Resources\urban-exploration.jpg" />
   </ItemGroup>
 
 </Project>
